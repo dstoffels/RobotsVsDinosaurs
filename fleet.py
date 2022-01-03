@@ -3,20 +3,35 @@ from robot import ROBOTS, Robot
 from weapon import WEAPONS
 
 class Fleet:
-  def __init__(self):
+  def __init__(self, is_AI=False):
     self.robots: list[Robot] = []
-    self.is_AI = False
+    self.is_AI = is_AI
+
+    if(self.is_AI):
+      self.create_random_fleet()
+    else:
+      self.create_fleet()
+
+  def check_if_defeated(self):
+    dead_robots = 0
+    for robot in self.robots:
+      dead_robots += 1 if robot.health <= 0 else 0
+    if(dead_robots == 3):
+      return True
+    else:
+      return False  
 
   def display_fleet_info(self):
-    title = '\nENEMY FLEET: \n' if self.is_AI else '\nYOUR FLEET: \n'
+    title = '\nENEMY FLEET:' if self.is_AI else '\nYOUR FLEET:'
     print(title)
     for robot in self.robots:
       target = robot.target.name if robot.target else 'None'
-      print(f'{robot.name}: [Health: {robot.health} | Target: {target}]')
+      target = f' | Target: {target}' if not self.is_AI else ''
+      print(f'{robot.name}: [Health: {robot.health}{target}]')
 
   def create_fleet(self):
     self.robots.clear()
-    name_prompt = f'Name your robot: '
+    name_prompt = f"Enter your robit's designation: "
     weapons = WEAPONS.copy()
 
     i = 0
@@ -29,8 +44,6 @@ class Fleet:
 
   # may update this to randomly generate 8-bit binary strings for robot names
   def create_random_fleet(self):
-    self.is_AI = True
-    self.robots.clear()
     robots = ROBOTS.copy()
     weapons = WEAPONS.copy()
     for robot in robots:
