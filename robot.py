@@ -8,6 +8,7 @@ class Robot:
     self.health = 100
     self.weapon : Weapon = None
     self.is_alive = True
+    self.target = None
 
   def equip_weapon(self, weapons):
       self.weapon = choose_weapon_from_list(self.name, weapons)      
@@ -18,7 +19,9 @@ class Robot:
     weapons.pop(i)
     return weapon
 
-
+  def set_target(self, dino):
+    self.target = dino
+  
   def take_damage(self, amount):
     self.health -= amount
     self.checkHealth()

@@ -1,4 +1,4 @@
-from constants import MAIN_MENU
+from constants import INTRO_MSG, MAIN_MENU
 from dinosaur import Dinosaur
 from fleet import Fleet
 from helpers import type_msg_slowly
@@ -14,7 +14,7 @@ class Battlefield:
     pass
 
   def display_welcome(self):
-    # type_msg_slowly(INTRO_MSG)
+    type_msg_slowly(INTRO_MSG)
     self._display_main_menu()
 
   def _display_main_menu(self):
@@ -26,10 +26,11 @@ class Battlefield:
         case '1':
           self.fleet.create_fleet()
           self.herd.create_random_herd()
-          
+          self.battle()
         case '2':
           self.herd.create_herd()
           self.fleet.create_random_fleet()
+          self.battle()
         case '3':
           print("Now we'll never know the fate of the planet...\n")
           exit()
@@ -37,8 +38,12 @@ class Battlefield:
           prompt = 'Please choose 1-3: '
 
   def battle(self):
-    self.fleet.display_fleet_info()
-    self.herd.display_herd_info()
+    if(self.herd.is_AI):
+      self.fleet.display_fleet_info()
+      self.herd.display_herd_info()
+    else:
+      self.herd.display_herd_info()
+      self.fleet.display_fleet_info()
 
   def dino_turn(self, dinosaur: Dinosaur):
     pass
@@ -55,8 +60,5 @@ class Battlefield:
   def display_winners(self):
     pass  
 
-INTRO_MSG = '''It is the year 3040 and humans have long been extinct.
-All that remains of the scorched Earth are the robots that destroyed them, and the dinosaurs they resurrected for theme parks.
-The final battle between the Robots and the Dinosaurs has begun, you decide the fate of the planet!
-'''
+
 

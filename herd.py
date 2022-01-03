@@ -6,10 +6,14 @@ from helpers import choose_dino_from_list
 class Herd:
   def __init__(self):
     self.dinosaurs: list[Dinosaur] = []
+    self.is_AI = False
 
   def display_herd_info(self):
+    title = '\nENEMY HERD: \n' if self.is_AI else '\nYOUR HERD: \n'
+    print(title)
     for dino in self.dinosaurs:
-      print(f'{dino.name}: [Health: {dino.health}]')
+      target = dino.target.name if dino.target else 'None'
+      print(f'{dino.name}: [Health: {dino.health} | Target: {target}]')
 
   def create_herd(self):
     self.dinosaurs.clear()
@@ -22,6 +26,8 @@ class Herd:
       i += 1
       
   def create_random_herd(self):
+    self.is_AI = True
+    self.dinosaurs.clear()
     dinosaurs = DINOSAURS.copy()
     i = 0
     while i < NUM_COMBATANTS:

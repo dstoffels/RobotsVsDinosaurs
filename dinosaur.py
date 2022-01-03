@@ -4,10 +4,14 @@ class Dinosaur:
     self.attack_power: int = attack_power
     self.health: int = 100
     self.is_alive = True
+    self.target = None
 
   def take_damage(self, amount):
     self.health -= amount
     self.checkHealth()
+
+  def set_target(self, robot):
+    self.target = robot
 
   def attack(self, robot):
     robot.take_damage(self.attack_power)
