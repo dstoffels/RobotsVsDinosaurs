@@ -1,10 +1,9 @@
 from constants import MAIN_MENU
 from dinosaur import Dinosaur
 from fleet import Fleet
+from helpers import type_msg_slowly
 from herd import Herd
 from robot import Robot
-import time
-import sys
 
 class Battlefield:
   def __init__(self):
@@ -12,16 +11,13 @@ class Battlefield:
     self.herd: Herd = Herd()
   
   def run_game(self):
-    # self.display_welcome()
-    self.display_main_menu()
+    pass
 
   def display_welcome(self):
-    for char in INTRO_MSG:
-      sys.stdout.write(char)
-      sys.stdout.flush()
-      time.sleep(0.02)
+    # type_msg_slowly(INTRO_MSG)
+    self._display_main_menu()
 
-  def display_main_menu(self):
+  def _display_main_menu(self):
     prompt = MAIN_MENU
 
     while True:
@@ -29,17 +25,20 @@ class Battlefield:
       match user_input:
         case '1':
           self.fleet.create_fleet()
-          self.herd.create_herd(True)
-          self.battle()
+          self.herd.create_random_herd()
+          
         case '2':
           self.herd.create_herd()
-          self.fleet.create_fleet(True)
-          self.battle()
+          self.fleet.create_random_fleet()
+        case '3':
+          print("Now we'll never know the fate of the planet...\n")
+          exit()
         case _:
-          prompt = 'Please choose 1-2: '
+          prompt = 'Please choose 1-3: '
 
   def battle(self):
-    pass
+    self.fleet.display_fleet_info()
+    self.herd.display_herd_info()
 
   def dino_turn(self, dinosaur: Dinosaur):
     pass
