@@ -22,28 +22,36 @@ class Robot:
   def set_target(self, dino):
     self.target = dino
   
+  def clear_target(self):
+    self.target = None
+  
   def take_damage(self, amount):
     self.health -= amount
     self.checkHealth()
   
-  def attack(self, dinosaur):
-    if dinosaur.is_alive:
-      self._damage_target(dinosaur)
+  def attack(self):
+    if self.target_is_alive():
+      self._damage_target()
     else:
-      print(f'***{dinosaur.name} is already dead, attack canceled***\n')
-      self.target = None
-
-  def _damage_target(self, dinosaur):
-    damage = self.weapon.attack_power + random.randint(-5, 5)
-    dinosaur.take_damage(damage)
-    print(f'{self.name} attacks {dinosaur.name} for {damage} damage!\n')
+      print(f'***{self.target.name} is already dead, attack canceled***\n')
+      self.clear_target()
     time.sleep(0.7)
 
+  def _damage_target(self):
+    damage = self.weapon.attack_power + random.randint(-5, 5)
+    print(f'{self.name} attacks {self.target.name} for {damage} damage!\n')
+    self.target.take_damage(damage)
+    if not self.target_is_alive():
+      self.clear_target()
+
+  def target_is_alive(self):
+    if self.target.is_alive: return True
+    else: return False
 
   def checkHealth(self):
     if(self.health <= 0):
       self.is_alive = False
-      print(f'***{self.name} has fallen on the battlefield!***')
+      print(f'***{self.name} has fallen on the battlefield!***\n')
 
   
   

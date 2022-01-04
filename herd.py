@@ -29,38 +29,47 @@ class Herd:
   def attack(self, opponent):
     if self.is_AI:
       self.select_targets(opponent)
-      print('The enemy fleet attacks the herd!\n')
+      print('***The enemy herd attacks the fleet!***\n')
       self._attack_targets()
     else:
       if self.attack_is_valid():
-        print('Your fleet attacks the enemy herd!\n')
+        print('***Your herd attacks the enemy fleet!***\n')
         self._attack_targets()
-      else:
-        print('Your herd needs targets first!\n')
-        time.sleep(1)
 
   def _attack_targets(self):
       for dino in self.dinosaurs:
-        dino.attack(dino.target)
+        if dino.is_alive:
+          dino.attack()
 
   def attack_is_valid(self):
     for dino in self.dinosaurs:
       if not dino.target:
+        print('***Your herd needs targets first!***\n')
+        time.sleep(1)
         return False
     return True
+
+  def clear_dead_targets(self):
+    for dino in self.dinosaurs:
+      if not dino.target_is_alive():
+        dino.clear_target()
 
   def select_targets(self, opponent):
     viable_targets = self._filter_living_targets(opponent.robots)
     if self.is_AI:
       self._select_random_targets(viable_targets)
     else:
-      for dino in self.dinosaurs:
+      self._manual_target_select(viable_targets)
+
+  def _manual_target_select(self, targets):
+    for dino in self.dinosaurs:
+      if dino.is_alive:
         prompt = f'\nChoose a target for {dino.name}: '
-        display_viable_targets(viable_targets)
-        i = validate_index_input(prompt, viable_targets)
-        dino.target = viable_targets[i]
+        display_viable_targets(targets)
+        i = validate_index_input(prompt, targets)
+        dino.set_target(targets[i])
         print(f'{dino.name} is now targeting {dino.target.name}\n')
-  
+
   def _select_random_targets(self, targets):
     for dino in self.dinosaurs:
       i = random.randint(0, index_len(targets))

@@ -12,12 +12,12 @@ class Battlefield:
     self.player_attacks_first = True
 
   def start(self):
-    # self._display_intro()
+    # self._display_intro() #TODO
     self._run_main_menu()
   
   def run_game(self):
     self.game_over = False
-    self.player.display_begin_battle_msg()
+    # self.player.display_begin_battle_msg() #TODO
     self._display_combat_options()
 
   def _battle(self):
@@ -30,10 +30,9 @@ class Battlefield:
       self.player_turn()
     self._toggle_first_attacker()
 
-  def player_turn(self): #print statements to display combat results over time
-    if not self.player.attack(self.ai): return False
+  def player_turn(self):
+    self.player.attack(self.ai)
     self.check_for_winner()
-    return True
 
   def ai_turn(self):
     self.ai.attack(self.player)
@@ -59,11 +58,9 @@ class Battlefield:
 
   def check_for_winner(self):
     if self.player.is_defeated():
-      self._display_victory()
-    elif self.ai.is_defeated():
       self._display_defeat()
-    else:
-      pass
+    elif self.ai.is_defeated():
+      self._display_victory()
 
   def _display_victory(self):
     text_crawler('PLACEHOLDER: YOU WIN') #FIXME
@@ -81,15 +78,12 @@ class Battlefield:
     while True:
       user_input = validate_int_input(prompt)
       match user_input:
-        case 1:
-          self._init_player_fleet()
-        case 2:
-          self._init_player_herd()
+        case 1: self._init_player_fleet()
+        case 2: self._init_player_herd()
         case 3:
           print("Now we'll never know the fate of the planet...\n")
           exit()
-        case _:
-          prompt = 'Please choose 1-3: '
+        case _: prompt = 'Please choose 1-3: '
 
   def _init_player_fleet(self):
     self.player = Fleet()

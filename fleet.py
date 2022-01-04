@@ -30,43 +30,52 @@ class Fleet:
   def attack(self, opponent):
     if self.is_AI:
       self.select_targets(opponent)
-      print('The enemy fleet attacks the herd!\n')
+      print('***The enemy fleet attacks the herd!***\n')
       self._attack_targets()
     else:
       if self.attack_is_valid():
-        print('Your fleet attacks the enemy herd!\n')
+        print('***Your fleet attacks the enemy herd!***\n')
         self._attack_targets()
-      else:
-        print('Your fleet needs targets first!\n')
-        time.sleep(1)
 
   def _attack_targets(self):
     for robot in self.robots:
-      robot.attack(robot.target)
+      if robot.is_alive:
+        robot.attack()
 
   def attack_is_valid(self):
     for robot in self.robots:
       if not robot.target:
+        print('***Your fleet needs targets first!***\n')
+        time.sleep(1)
         return False
     return True
 
+  def clear_dead_targets(self):
+    for robot in self.robots:
+      if not robot.target_is_alive():
+        robot.clear_target()
+
   def select_targets(self, opponent):
     viable_targets = self._filter_living_targets(opponent.dinosaurs)
+
     if self.is_AI:
       self._select_random_targets(viable_targets)
     else:
-      for robot in self.robots:
+      self._manual_target_select(viable_targets)
+
+  def _manual_target_select(self, targets):
+    for robot in self.robots:
+      if robot.is_alive:
         prompt = f'\nChoose a target for {robot.name}: '
-        display_viable_targets(viable_targets)
-        i = validate_index_input(prompt, viable_targets)
-        robot.target = viable_targets[i]
+        display_viable_targets(targets)
+        i = validate_index_input(prompt, targets)
+        robot.set_target(targets[i])
         print(f'{robot.name} is now targeting {robot.target.name}\n')
   
   def _select_random_targets(self, targets):
     for robot in self.robots:
       i = random.randint(0, index_len(targets))
       robot.target = targets[i]
-      targets.pop(i)
 
   def _filter_living_targets(self, dinosaurs):
     targets = []
