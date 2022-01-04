@@ -1,7 +1,9 @@
 import random
 import time
+import copy
+
 from dinosaur import Dinosaur, DINOSAURS
-from constants import BEGIN_BATTLE_MSG_DINO, NUM_COMBATANTS
+from constants import BEGIN_BATTLE_MSG_DINO, HERD_DEFEAT, HERD_VICTORY, NUM_COMBATANTS
 from helpers import choose_dino_from_list, display_viable_targets, index_len, text_crawler, validate_index_input
 
 class Herd:
@@ -30,16 +32,17 @@ class Herd:
     if self.is_AI:
       self.select_targets(opponent)
       print('***The enemy herd attacks the fleet!***\n')
-      self._attack_targets()
+      self._attack_targets(opponent)
     else:
       if self.attack_is_valid():
         print('***Your herd attacks the enemy fleet!***\n')
-        self._attack_targets()
+        self._attack_targets(opponent)
 
-  def _attack_targets(self):
+  def _attack_targets(self, opponent):
       for dino in self.dinosaurs:
         if dino.is_alive:
           dino.attack()
+          if opponent.is_defeated(): break
 
   def attack_is_valid(self):
     for dino in self.dinosaurs:
@@ -74,7 +77,6 @@ class Herd:
     for dino in self.dinosaurs:
       i = random.randint(0, index_len(targets))
       dino.target = targets[i]
-      targets.pop(i)
 
   def _filter_living_targets(self, robots):
     targets = []
@@ -93,7 +95,7 @@ class Herd:
 
   def create_herd(self):
     self.dinosaurs.clear()
-    dino_list = DINOSAURS.copy()
+    dino_list = copy.deepcopy(DINOSAURS)
 
     i = 0
     while i < NUM_COMBATANTS:
@@ -102,10 +104,17 @@ class Herd:
       i += 1
       
   def create_random_herd(self):
-    dinosaurs = DINOSAURS.copy()
+    dinosaurs = copy.deepcopy(DINOSAURS)
+    
     i = 0
     while i < NUM_COMBATANTS:
-      index = random.randint(0, len(dinosaurs) - 1)
+      index = random.randint(0, index_len(dinosaurs))
       self.dinosaurs.append(dinosaurs[index])
       dinosaurs.pop(index)
       i += 1
+
+  def victory(self):
+    text_crawler(HERD_VICTORY)
+  
+  def defeat(self):
+    text_crawler(HERD_DEFEAT)

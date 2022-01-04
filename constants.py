@@ -32,3 +32,37 @@ Choose a command:
 3) Surrender
 
 '''
+
+HERD_VICTORY = '''
+##### VICTORY #####
+
+The last of the robots have been vanquished at last!
+Dinosaurs once again rule the Earth!
+'''
+
+HERD_DEFEAT = '''
+##### DEFEAT #####
+
+The machines have laid waste to the last of the dinosaurs...
+'''
+
+FLEET_VICTORY = '''
+##### VICTORY #####
+
+10001010101101101010001010101101010011001000...
+EX-TERM-IN-ATE!
+'''
+
+FLEET_DEFEAT = '''
+##### DEFEAT #####
+
+111000000000000000000000....
+System Failure...
+'''
+
+PLAY_AGAIN = '''
+Would you like to play again?
+1) Yes
+2) No
+
+'''

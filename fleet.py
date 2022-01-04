@@ -1,6 +1,7 @@
+import copy
 import random
 import time
-from constants import BEGIN_BATTLE_MSG_ROBOT, NUM_COMBATANTS
+from constants import BEGIN_BATTLE_MSG_ROBOT, FLEET_DEFEAT, FLEET_VICTORY, NUM_COMBATANTS
 from helpers import display_viable_targets, index_len, text_crawler, validate_index_input
 from robot import ROBOTS, Robot
 from weapon import WEAPONS
@@ -31,16 +32,17 @@ class Fleet:
     if self.is_AI:
       self.select_targets(opponent)
       print('***The enemy fleet attacks the herd!***\n')
-      self._attack_targets()
+      self._attack_targets(opponent)
     else:
       if self.attack_is_valid():
         print('***Your fleet attacks the enemy herd!***\n')
-        self._attack_targets()
+        self._attack_targets(opponent)
 
-  def _attack_targets(self):
+  def _attack_targets(self, opponent):
     for robot in self.robots:
       if robot.is_alive:
         robot.attack()
+        if opponent.is_defeated(): break
 
   def attack_is_valid(self):
     for robot in self.robots:
@@ -107,9 +109,15 @@ class Fleet:
 
   # may update this to randomly generate 8-bit binary strings for robot names instead of pulling from ROBOTS
   def create_random_fleet(self):
-    robots = ROBOTS.copy()
+    robots = copy.deepcopy(ROBOTS)
     weapons = WEAPONS.copy()
     for robot in robots:
       robot.select_random_weapon(weapons)
       self.robots.append(robot)
+
+  def victory(self):
+    text_crawler(FLEET_VICTORY)
+  
+  def defeat(self):
+    text_crawler(FLEET_DEFEAT)
 
