@@ -8,7 +8,7 @@ Before you begin the last user story that is highlighted in grey, write an algor
 
 User stories:
 
---(/5 points): As a developer, I want to make at least 7 commits with good, descriptive messages.
+<!-- --(/5 points): As a developer, I want to make at least 7 commits with good, descriptive messages. -->
 
 <!-- --(/5 points): As a developer, I want to make a class for each of the following: Robot, Dinosaur, Fleet, Herd, Weapon, Battlefield. -->
 
@@ -21,7 +21,10 @@ User stories:
 <!-- --(/10 points): As a developer, I want the created Robot objects to be stored in a Fleet and the created Dinosaur objects to be stored in a Herd (the Fleet and Herd must use a List to store the objects). -->
 
 --(/10 points): As a developer, I want a Robot to have the ability to attack a Dinosaur and a Dinosaur to have the ability to attack a Robot on a Battlefield.
-----Upon player's turn, a menu will allow player to select targets, engage or surrender
+
+<!-- ----Upon player's turn, a menu will allow player to select targets, engage or surrender -->
+
+------Menu will display current status of herd/fleet: current target & target health (clean up for uniform look)
 ----When attacking, a randint(-5, 5) will be added to attack_power
 
 <!-- --(/10 points): As a developer, I want a Robot/Dinosaur to lose health points (loss based on attack power) when another Robot/Dinosaur successfully attacks it. -->

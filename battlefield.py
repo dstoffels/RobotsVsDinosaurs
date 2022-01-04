@@ -15,7 +15,7 @@ class Battlefield:
     pass
 
   def display_welcome(self):
-    type_msg_slowly(INTRO_MSG)
+    # type_msg_slowly(INTRO_MSG)
     self._display_main_menu()
 
   def _display_main_menu(self):
@@ -27,11 +27,11 @@ class Battlefield:
         case 1:
           self.fleet = Fleet()
           self.herd = Herd(True)
-          self.display_combat_options()
+          self.battle()
         case 2:
           self.herd = Herd()
           self.fleet = Fleet(True)
-          self.display_combat_options()
+          self.battle()
         case 3:
           print("Now we'll never know the fate of the planet...\n")
           exit()
@@ -41,10 +41,9 @@ class Battlefield:
   def battle(self):
     if(self.herd.is_AI):
       self.fleet.display_fleet_info()
-      self.herd.display_herd_info()
     else:
       self.herd.display_herd_info()
-      self.fleet.display_fleet_info()
+    self.display_combat_options()
 
   def dino_turn(self, dinosaur: Dinosaur):
     pass

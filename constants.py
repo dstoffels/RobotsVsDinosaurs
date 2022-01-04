@@ -13,6 +13,16 @@ Choose your side:
 
 '''
 
+BEGIN_BATTLE_MSG_ROBOT = '''
+A rumbling in the ground grows louder. Soon a herd of dinosaurs appears before you, snarling and gnashing as they approach.
+Prepare your fleet for battle!!!
+'''
+
+BEGIN_BATTLE_MSG_DINO = '''
+A flurry of mechanical noises and crashing trees can be heard as a fleet of robots bursts into view...
+Assemble the herd, battle is upon us!!!
+'''
+
 COMBAT_MENU = '''
 Choose a command:
 1) Select Targets

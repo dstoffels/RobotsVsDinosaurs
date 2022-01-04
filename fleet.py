@@ -22,12 +22,12 @@ class Fleet:
       return False  
 
   def display_fleet_info(self):
-    title = '\nENEMY FLEET:' if self.is_AI else '\nYOUR FLEET:'
-    print(title)
     for robot in self.robots:
-      target = robot.target.name if robot.target else 'None'
-      target = f' | Target: {target}' if not self.is_AI else ''
-      print(f'{robot.name}: [Health: {robot.health}{target}]')
+      if robot.is_alive:
+        target = f'{robot.target.name} | Target Health: {robot.target.health}' if robot.target else 'None'
+        print(f'[{robot.name} | Health: {robot.health}]  [Target: {target}]')
+      else:
+        print(f'[{robot.name}: OFFLINE]')
 
   def create_fleet(self):
     self.robots.clear()

@@ -24,12 +24,12 @@ class Herd:
 
 
   def display_herd_info(self):
-    title = '\nENEMY HERD:' if self.is_AI else '\nYOUR HERD:'
-    print(title)
     for dino in self.dinosaurs:
-      target = dino.target.name if dino.target else 'None'
-      target = f' | Target: {target}' if not self.is_AI else ''
-      print(f'{dino.name}: [Health: {dino.health}{target}]')
+      if dino.is_alive:
+        target = f'{dino.target.name} | Target Health: {dino.target.health}' if dino.target else 'None'
+        print(f'[{dino.name} | Health: {dino.health}] [Target: {target}]')
+      else:
+        print(f'[{dino.name}: EXTINCT]')
 
   def create_herd(self):
     self.dinosaurs.clear()
