@@ -27,13 +27,23 @@ class Robot:
     self.checkHealth()
   
   def attack(self, dinosaur):
+    if dinosaur.is_alive:
+      self._damage_target(dinosaur)
+    else:
+      print(f'***{dinosaur.name} is already dead, attack canceled***\n')
+      self.target = None
+
+  def _damage_target(self, dinosaur):
     damage = self.weapon.attack_power + random.randint(-5, 5)
     dinosaur.take_damage(damage)
     print(f'{self.name} attacks {dinosaur.name} for {damage} damage!\n')
     time.sleep(0.7)
 
+
   def checkHealth(self):
-    self.is_alive = False if self.health <= 0 else True
+    if(self.health <= 0):
+      self.is_alive = False
+      print(f'***{self.name} has fallen on the battlefield!***')
 
   
   

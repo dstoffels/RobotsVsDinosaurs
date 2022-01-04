@@ -28,7 +28,7 @@ Assemble the herd, battle is upon us!!!
 COMBAT_MENU = '''
 Choose a command:
 1) Select Targets
-2) Engage
+2) Engage The Enemy!
 3) Surrender
 
 '''

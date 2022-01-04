@@ -12,19 +12,30 @@ class Dinosaur:
 
   def take_damage(self, amount):
     self.health -= amount
-    self.checkHealth()
+    self._checkHealth()
 
   def set_target(self, robot):
     self.target = robot
 
   def attack(self, robot):
+    if robot.is_alive:
+      self._damage_target(robot)
+    else:
+      print(f'***{robot.name} is already dead, attack canceled***')
+      self.target = None
+
+  def _damage_target(self, robot):
     damage = self.attack_power + random.randint(-5, 5)
     robot.take_damage(damage)
     print(f'{self.name} attacks {robot.name} for {damage} damage!\n')
     time.sleep(0.7)
 
-  def checkHealth(self):
-    self.is_alive = False if self.health <= 0 else True
+
+  def _checkHealth(self):
+    if(self.health <= 0):
+      self.is_alive = False
+      print(f'***{self.name} has fallen on the battlefield!***')
+    
 
 PACHYCEPHELASAURUS = Dinosaur('Pachycephalosaurus', 10)
 TRICERATOPS = Dinosaur('Triceratops', 15)

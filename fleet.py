@@ -33,20 +33,18 @@ class Fleet:
       print('The enemy fleet attacks the herd!\n')
       self._attack_targets()
     else:
-      if self._attack_is_valid():
+      if self.attack_is_valid():
         print('Your fleet attacks the enemy herd!\n')
         self._attack_targets()
       else:
         print('Your fleet needs targets first!\n')
         time.sleep(1)
-        return False
-    return True
 
   def _attack_targets(self):
-      for robot in self.robots:
-        robot.attack(robot.target)
+    for robot in self.robots:
+      robot.attack(robot.target)
 
-  def _attack_is_valid(self):
+  def attack_is_valid(self):
     for robot in self.robots:
       if not robot.target:
         return False

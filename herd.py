@@ -32,20 +32,18 @@ class Herd:
       print('The enemy fleet attacks the herd!\n')
       self._attack_targets()
     else:
-      if self._attack_is_valid():
+      if self.attack_is_valid():
         print('Your fleet attacks the enemy herd!\n')
         self._attack_targets()
       else:
         print('Your herd needs targets first!\n')
         time.sleep(1)
-        return False
-    return True   
 
   def _attack_targets(self):
       for dino in self.dinosaurs:
         dino.attack(dino.target)
 
-  def _attack_is_valid(self):
+  def attack_is_valid(self):
     for dino in self.dinosaurs:
       if not dino.target:
         return False

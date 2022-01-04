@@ -21,8 +21,9 @@ class Battlefield:
     self._display_combat_options()
 
   def _battle(self):
+    if not self.player.attack_is_valid(): return
     if self.player_attacks_first:
-      if not self.player_turn(): return
+      self.player_turn()
       self.ai_turn()
     else:
       self.ai_turn()
@@ -43,10 +44,10 @@ class Battlefield:
 
   def _display_combat_options(self):
     while not self.game_over:
-      prompt = COMBAT_MENU
       self.player.display_status()
-      userInput = validate_int_input(prompt)
 
+      prompt = COMBAT_MENU
+      userInput = validate_int_input(prompt)
       match userInput:
         case 1: self._select_player_targets()
         case 2: self._battle()
