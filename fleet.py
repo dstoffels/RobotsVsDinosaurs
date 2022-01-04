@@ -1,6 +1,7 @@
 import random
+import time
 from constants import BEGIN_BATTLE_MSG_ROBOT, NUM_COMBATANTS
-from helpers import display_viable_targets, type_msg_slowly, validate_index_input
+from helpers import display_viable_targets, index_len, text_crawler, validate_index_input
 from robot import ROBOTS, Robot
 from weapon import WEAPONS
 
@@ -15,16 +16,41 @@ class Fleet:
       self.create_fleet()
 
   def display_begin_battle_msg(self):
-    type_msg_slowly(BEGIN_BATTLE_MSG_ROBOT)
+    text_crawler(BEGIN_BATTLE_MSG_ROBOT)
 
-  def check_if_defeated(self):
+  def is_defeated(self):
     dead_robots = 0
     for robot in self.robots:
       dead_robots += 1 if robot.health <= 0 else 0
     if(dead_robots == 3):
       return True
     else:
-      return False  
+      return False
+
+  def attack(self, opponent):
+    if self.is_AI:
+      self.select_targets(opponent)
+      print('The enemy fleet attacks the herd!\n')
+      self._attack_targets()
+    else:
+      if self._attack_is_valid():
+        print('Your fleet attacks the enemy herd!\n')
+        self._attack_targets()
+      else:
+        print('Your fleet needs targets first!\n')
+        time.sleep(1)
+        return False
+    return True
+
+  def _attack_targets(self):
+      for robot in self.robots:
+        robot.attack(robot.target)
+
+  def _attack_is_valid(self):
+    for robot in self.robots:
+      if not robot.target:
+        return False
+    return True
 
   def select_targets(self, opponent):
     viable_targets = self._filter_living_targets(opponent.dinosaurs)
@@ -38,11 +64,11 @@ class Fleet:
         robot.target = viable_targets[i]
         print(f'{robot.name} is now targeting {robot.target.name}\n')
   
-  def _select_random_targets(self, dinosaurs):
-    for dino in self.dinosaurs:
-      i = random.randint(0, len(dinosaurs))
-      dino.target = dinosaurs[i]
-      dinosaurs.pop(i)
+  def _select_random_targets(self, targets):
+    for robot in self.robots:
+      i = random.randint(0, index_len(targets))
+      robot.target = targets[i]
+      targets.pop(i)
 
   def _filter_living_targets(self, dinosaurs):
     targets = []
@@ -72,7 +98,7 @@ class Fleet:
       self.robots.append(new_robot)
       i += 1
 
-  # may update this to randomly generate 8-bit binary strings for robot names
+  # may update this to randomly generate 8-bit binary strings for robot names instead of pulling from ROBOTS
   def create_random_fleet(self):
     robots = ROBOTS.copy()
     weapons = WEAPONS.copy()

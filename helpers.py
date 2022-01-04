@@ -37,7 +37,7 @@ Choose a dinosaur for your herd:
     i += 1
   return string + '\n'
 
-def type_msg_slowly(message):
+def text_crawler(message):
   for char in message:
     pause = 0.02
     if(char == '\n'):
@@ -67,3 +67,6 @@ def display_viable_targets(targets):
   for target in targets:
     print(f'{i}) {target.name} | Health: {target.health}')
     i += 1
+
+def index_len(list):
+  return len(list) - 1

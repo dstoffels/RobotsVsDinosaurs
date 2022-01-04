@@ -1,7 +1,8 @@
 import random
+import time
 from dinosaur import Dinosaur, DINOSAURS
 from constants import BEGIN_BATTLE_MSG_DINO, NUM_COMBATANTS
-from helpers import choose_dino_from_list, display_viable_targets, type_msg_slowly, validate_index_input
+from helpers import choose_dino_from_list, display_viable_targets, index_len, text_crawler, validate_index_input
 
 class Herd:
   def __init__(self, is_AI = False):
@@ -14,9 +15,9 @@ class Herd:
       self.create_herd()
 
   def display_begin_battle_msg(self):
-    type_msg_slowly(BEGIN_BATTLE_MSG_DINO)
+    text_crawler(BEGIN_BATTLE_MSG_DINO)
 
-  def check_if_defeated(self):
+  def is_defeated(self):
     dead_dinos = 0
     for dino in self.dinosaurs:
       dead_dinos += 1 if dino.health <= 0 else 0
@@ -24,6 +25,31 @@ class Herd:
       return True
     else:
       return False
+  
+  def attack(self, opponent):
+    if self.is_AI:
+      self.select_targets(opponent)
+      print('The enemy fleet attacks the herd!\n')
+      self._attack_targets()
+    else:
+      if self._attack_is_valid():
+        print('Your fleet attacks the enemy herd!\n')
+        self._attack_targets()
+      else:
+        print('Your herd needs targets first!\n')
+        time.sleep(1)
+        return False
+    return True   
+
+  def _attack_targets(self):
+      for dino in self.dinosaurs:
+        dino.attack(dino.target)
+
+  def _attack_is_valid(self):
+    for dino in self.dinosaurs:
+      if not dino.target:
+        return False
+    return True
 
   def select_targets(self, opponent):
     viable_targets = self._filter_living_targets(opponent.robots)
@@ -39,7 +65,7 @@ class Herd:
   
   def _select_random_targets(self, targets):
     for dino in self.dinosaurs:
-      i = random.randint(0, len(targets))
+      i = random.randint(0, index_len(targets))
       dino.target = targets[i]
       targets.pop(i)
 

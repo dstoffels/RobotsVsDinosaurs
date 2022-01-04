@@ -1,3 +1,7 @@
+import random
+import time
+
+
 class Dinosaur:
   def __init__(self, name, attack_power):
     self.name: str = name
@@ -14,7 +18,10 @@ class Dinosaur:
     self.target = robot
 
   def attack(self, robot):
-    robot.take_damage(self.attack_power)
+    damage = self.attack_power + random.randint(-5, 5)
+    robot.take_damage(damage)
+    print(f'{self.name} attacks {robot.name} for {damage} damage!\n')
+    time.sleep(0.7)
 
   def checkHealth(self):
     self.is_alive = False if self.health <= 0 else True
