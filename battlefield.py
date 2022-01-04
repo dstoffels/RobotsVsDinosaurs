@@ -1,66 +1,41 @@
 from fleet import Fleet
 from herd import Herd
-from dinosaur import Dinosaur
-from robot import Robot
 
 from helpers import type_msg_slowly, validate_int_input
 from constants import COMBAT_MENU, INTRO_MSG, MAIN_MENU
 
 class Battlefield:
   def __init__(self):
-    self.fleet: Fleet = None
-    self.herd: Herd = None
+    self.player = None
+    self.ai = None
   
   def run_game(self):
-    pass
-
-  def display_welcome(self):
-    # type_msg_slowly(INTRO_MSG)
-    self._display_main_menu()
-
-  def _display_main_menu(self):
-    prompt = MAIN_MENU
-
-    while True:
-      user_input = validate_int_input(prompt)
-      match user_input:
-        case 1:
-          self.fleet = Fleet()
-          self.herd = Herd(True)
-          self.battle()
-        case 2:
-          self.herd = Herd()
-          self.fleet = Fleet(True)
-          self.battle()
-        case 3:
-          print("Now we'll never know the fate of the planet...\n")
-          exit()
-        case _:
-          prompt = 'Please choose 1-3: '
+    # self._display_intro()
+    self._run_main_menu()
 
   def battle(self):
-    if(self.herd.is_AI):
-      self.fleet.display_fleet_info()
-    else:
-      self.herd.display_herd_info()
-    self.display_combat_options()
-
-  def dino_turn(self, dinosaur: Dinosaur):
     pass
 
-  def robot_turn(self, robot: Robot):
+  def _initial_player_turn(self):
+    self.player.display_begin_battle_msg()
+    self.player_turn()
+  
+  def player_turn(self):
+    self.player.display_status()
+    self._display_combat_options()
+
+  def ai_turn(self):
     pass
 
-  # FIXME: implement conditionals
-  def check_for_winner(self):
-    if(self.herd.check_if_defeated()):
+  def check_for_winner(self): # FIXME: implement conditionals
+    if(self.player.check_if_defeated()):
       pass
-    elif(self.fleet.check_if_defeated()):
+    elif(self.ai.check_if_defeated()):
       pass
     else:
       pass
 
-  def display_combat_options(self):
+  def _display_combat_options(self):
     prompt = COMBAT_MENU
     while True:
       userInput = validate_int_input(prompt)
@@ -78,5 +53,30 @@ class Battlefield:
   def display_winners(self):
     pass  
 
+  def _display_intro(self):
+    type_msg_slowly(INTRO_MSG)
 
+  def _run_main_menu(self):
+    prompt = MAIN_MENU
+    while True:
+      user_input = validate_int_input(prompt)
+      match user_input:
+        case 1:
+          self._init_player_fleet()
+        case 2:
+          self._init_player_herd()
+        case 3:
+          print("Now we'll never know the fate of the planet...\n")
+          exit()
+        case _:
+          prompt = 'Please choose 1-3: '
 
+  def _init_player_fleet(self):
+    self.player = Fleet()
+    self.ai = Herd(True)
+    self._initial_player_turn()
+
+  def _init_player_herd(self):
+    self.player = Herd()
+    self.ai = Fleet(True)
+    self._initial_player_turn()

@@ -22,8 +22,8 @@ User stories:
 
 --(/10 points): As a developer, I want a Robot to have the ability to attack a Dinosaur and a Dinosaur to have the ability to attack a Robot on a Battlefield.
 
-<!-- ----Upon player's turn, a menu will allow player to select targets, engage or surrender -->
-
+----Upon player's turn, a menu will allow player to select targets, engage or surrender
+------Engage combat requires validation that each entity has a target
 ------Menu will display current status of herd/fleet: current target & target health (clean up for uniform look)
 ----When attacking, a randint(-5, 5) will be added to attack_power
 

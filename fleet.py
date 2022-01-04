@@ -1,4 +1,5 @@
-from constants import NUM_COMBATANTS
+from constants import BEGIN_BATTLE_MSG_ROBOT, NUM_COMBATANTS
+from helpers import type_msg_slowly
 from robot import ROBOTS, Robot
 from weapon import WEAPONS
 
@@ -12,6 +13,9 @@ class Fleet:
     else:
       self.create_fleet()
 
+  def display_begin_battle_msg(self):
+    type_msg_slowly(BEGIN_BATTLE_MSG_ROBOT)
+
   def check_if_defeated(self):
     dead_robots = 0
     for robot in self.robots:
@@ -21,7 +25,7 @@ class Fleet:
     else:
       return False  
 
-  def display_fleet_info(self):
+  def display_status(self):
     for robot in self.robots:
       if robot.is_alive:
         target = f'{robot.target.name} | Target Health: {robot.target.health}' if robot.target else 'None'

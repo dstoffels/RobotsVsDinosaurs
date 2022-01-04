@@ -1,7 +1,7 @@
 import random
 from dinosaur import Dinosaur, DINOSAURS
-from constants import NUM_COMBATANTS
-from helpers import choose_dino_from_list
+from constants import BEGIN_BATTLE_MSG_DINO, NUM_COMBATANTS
+from helpers import choose_dino_from_list, type_msg_slowly
 
 class Herd:
   def __init__(self, is_AI = False):
@@ -13,6 +13,9 @@ class Herd:
     else:
       self.create_herd()
 
+  def display_begin_battle_msg(self):
+    type_msg_slowly(BEGIN_BATTLE_MSG_DINO)
+
   def check_if_defeated(self):
     dead_dinos = 0
     for dino in self.dinosaurs:
@@ -20,10 +23,9 @@ class Herd:
     if(dead_dinos == 3):
       return True
     else:
-      return False  
+      return False
 
-
-  def display_herd_info(self):
+  def display_status(self):
     for dino in self.dinosaurs:
       if dino.is_alive:
         target = f'{dino.target.name} | Target Health: {dino.target.health}' if dino.target else 'None'
