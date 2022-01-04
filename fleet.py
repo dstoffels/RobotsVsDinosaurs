@@ -1,5 +1,6 @@
+import random
 from constants import BEGIN_BATTLE_MSG_ROBOT, NUM_COMBATANTS
-from helpers import type_msg_slowly
+from helpers import display_viable_targets, type_msg_slowly, validate_index_input
 from robot import ROBOTS, Robot
 from weapon import WEAPONS
 
@@ -24,6 +25,31 @@ class Fleet:
       return True
     else:
       return False  
+
+  def select_targets(self, opponent):
+    viable_targets = self._filter_living_targets(opponent.dinosaurs)
+    if self.is_AI:
+      self._select_random_targets(viable_targets)
+    else:
+      for robot in self.robots:
+        prompt = f'\nChoose a target for {robot.name}: '
+        display_viable_targets(viable_targets)
+        i = validate_index_input(prompt, viable_targets)
+        robot.target = viable_targets[i]
+        print(f'{robot.name} is now targeting {robot.target.name}\n')
+  
+  def _select_random_targets(self, dinosaurs):
+    for dino in self.dinosaurs:
+      i = random.randint(0, len(dinosaurs))
+      dino.target = dinosaurs[i]
+      dinosaurs.pop(i)
+
+  def _filter_living_targets(self, dinosaurs):
+    targets = []
+    for dino in dinosaurs:
+      if dino.is_alive:
+        targets.append(dino)
+    return targets
 
   def display_status(self):
     for robot in self.robots:

@@ -21,7 +21,6 @@ class Battlefield:
     self.player_turn()
   
   def player_turn(self):
-    self.player.display_status()
     self._display_combat_options()
 
   def ai_turn(self):
@@ -38,17 +37,21 @@ class Battlefield:
   def _display_combat_options(self):
     prompt = COMBAT_MENU
     while True:
+      self.player.display_status()
       userInput = validate_int_input(prompt)
 
       match userInput:
         case 1:
-          pass # implement target selection method
-        case 2:
+          self.player.select_targets(self.ai)
+        case 2: # engage opponent
           pass # implement player turn method followed by AI turn method
-        case 3:
+        case 3: # surrender
           return
         case _:
           prompt = 'Please select between 1-3'
+    
+  def _select_player_targets(self):
+    self.player
 
   def display_winners(self):
     pass  

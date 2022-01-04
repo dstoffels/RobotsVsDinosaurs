@@ -1,7 +1,7 @@
 import random
 from dinosaur import Dinosaur, DINOSAURS
 from constants import BEGIN_BATTLE_MSG_DINO, NUM_COMBATANTS
-from helpers import choose_dino_from_list, type_msg_slowly
+from helpers import choose_dino_from_list, display_viable_targets, type_msg_slowly, validate_index_input
 
 class Herd:
   def __init__(self, is_AI = False):
@@ -24,6 +24,31 @@ class Herd:
       return True
     else:
       return False
+
+  def select_targets(self, opponent):
+    viable_targets = self._filter_living_targets(opponent.robots)
+    if self.is_AI:
+      self._select_random_targets(viable_targets)
+    else:
+      for dino in self.dinosaurs:
+        prompt = f'\nChoose a target for {dino.name}: '
+        display_viable_targets(viable_targets)
+        i = validate_index_input(prompt, viable_targets)
+        dino.target = viable_targets[i]
+        print(f'{dino.name} is now targeting {dino.target.name}\n')
+  
+  def _select_random_targets(self, targets):
+    for dino in self.dinosaurs:
+      i = random.randint(0, len(targets))
+      dino.target = targets[i]
+      targets.pop(i)
+
+  def _filter_living_targets(self, robots):
+    targets = []
+    for robot in robots:
+      if robot.is_alive:
+        targets.append(robot)
+    return targets
 
   def display_status(self):
     for dino in self.dinosaurs:
