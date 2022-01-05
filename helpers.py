@@ -1,7 +1,6 @@
 import time
 import sys
 
-# need index validation
 def choose_weapon_from_list(name, weapons: list):
   prompt = choose_weapon_str_builder(name, weapons)
   i = validate_index_input(prompt, weapons)
@@ -9,7 +8,6 @@ def choose_weapon_from_list(name, weapons: list):
   weapons.pop(i)
   return weapon
 
-# need index validation
 def choose_dino_from_list(dinosaurs: list):
   prompt = choose_dino_str_bldr(dinosaurs)
   i = validate_index_input(prompt, dinosaurs)

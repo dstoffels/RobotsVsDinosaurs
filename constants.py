@@ -1,6 +1,7 @@
 NUM_COMBATANTS = 3
 
-INTRO_MSG = '''It is the year 3040 and humans have long been extinct.
+INTRO_MSG = '''
+It is the year 3040 and humans have long been extinct.
 All that remains of the scorched Earth are the robots that destroyed them, and the dinosaurs they resurrected for theme parks.
 The final battle between the Robots and the Dinosaurs has begun, you decide the fate of the planet!
 '''
@@ -60,7 +61,7 @@ FLEET_DEFEAT = '''
 System Failure...
 '''
 
-PLAY_AGAIN = '''
+PLAY_AGAIN_MSG = '''
 Would you like to play again?
 1) Yes
 2) No

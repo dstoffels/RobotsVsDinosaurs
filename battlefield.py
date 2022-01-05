@@ -1,8 +1,8 @@
 from fleet import Fleet
 from herd import Herd
 
-from helpers import text_crawler, validate_index_input, validate_int_input
-from constants import COMBAT_MENU, INTRO_MSG, MAIN_MENU, PLAY_AGAIN
+from helpers import text_crawler, validate_int_input
+from constants import COMBAT_MENU, INTRO_MSG, MAIN_MENU, PLAY_AGAIN_MSG
 
 class Battlefield:
   def __init__(self):
@@ -15,7 +15,7 @@ class Battlefield:
     self._display_intro()
     self._run_main_menu()
   
-  def run_game(self):
+  def _run_game(self):
     self.game_over = False
     self.player.display_begin_battle_msg()
     self._display_combat_options()
@@ -23,34 +23,34 @@ class Battlefield:
   def _battle(self):
     if not self.player.attack_is_valid(): return
     if self.player_attacks_first:
-      self.player_turn()
-      if not self.game_over: self.ai_turn()
+      self._player_turn()
+      if not self.game_over: self._ai_turn()
     else:
-      self.ai_turn()
-      if not self.game_over: self.player_turn()
+      self._ai_turn()
+      if not self.game_over: self._player_turn()
     self._toggle_first_attacker()
 
-  def player_turn(self):
+  def _player_turn(self):
     self.player.attack(self.ai)
-    self.check_for_winner()
+    self._check_for_winner()
 
-  def ai_turn(self):
+  def _ai_turn(self):
     self.ai.attack(self.player)
-    self.check_for_winner()
+    self._check_for_winner()
 
-  def check_for_winner(self):
+  def _check_for_winner(self):
     if self.player.is_defeated(): self._defeat()
     elif self.ai.is_defeated(): self._victory()
 
   def _victory(self):
     self.player.victory()
-    self.end_game()
+    self._end_game()
 
   def _defeat(self):
     self.player.defeat()
-    self.end_game()
+    self._end_game()
 
-  def end_game(self):
+  def _end_game(self):
     self.player = self.ai = None
     self.game_over = True
 
@@ -69,7 +69,7 @@ class Battlefield:
         case 3: self._defeat() # surrender
         case _: prompt = 'Please select between 1-3'
     
-    userInput = validate_int_input(PLAY_AGAIN)
+    userInput = validate_int_input(PLAY_AGAIN_MSG)
     match userInput:
       case 1: return
       case 2: exit()
@@ -96,9 +96,9 @@ class Battlefield:
   def _init_player_fleet(self):
     self.player = Fleet()
     self.ai = Herd(True)
-    self.run_game()
+    self._run_game()
 
   def _init_player_herd(self):
     self.player = Herd()
     self.ai = Fleet(True)
-    self.run_game()
+    self._run_game()

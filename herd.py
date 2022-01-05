@@ -86,10 +86,11 @@ class Herd:
     return targets
 
   def display_status(self):
+    print('[ HERD STATUS ]\n')
     for dino in self.dinosaurs:
       if dino.is_alive:
         target = f'{dino.target.name} | Target Health: {dino.target.health}' if dino.target else 'None'
-        print(f'[{dino.name} | Health: {dino.health}] [Target: {target}]')
+        print(f'{dino.name} [Health: {dino.health} | Target: {target}]')
       else:
         print(f'[{dino.name}: EXTINCT]')
 
@@ -99,6 +100,7 @@ class Herd:
 
     i = 0
     while i < NUM_COMBATANTS:
+      print(f'[ ASSEMBLE THE HERD {i + 1}/{NUM_COMBATANTS} ]')
       new_dino = choose_dino_from_list(dino_list)
       self.dinosaurs.append(new_dino)
       i += 1

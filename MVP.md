@@ -20,20 +20,20 @@ User stories:
 
 <!-- --(/10 points): As a developer, I want the created Robot objects to be stored in a Fleet and the created Dinosaur objects to be stored in a Herd (the Fleet and Herd must use a List to store the objects). -->
 
---(/10 points): As a developer, I want a Robot to have the ability to attack a Dinosaur and a Dinosaur to have the ability to attack a Robot on a Battlefield.
+<!-- --(/10 points): As a developer, I want a Robot to have the ability to attack a Dinosaur and a Dinosaur to have the ability to attack a Robot on a Battlefield. -->
 
-----Upon player's turn, a menu will allow player to select targets, engage or surrender
+<!-- ----Upon player's turn, a menu will allow player to select targets, engage or surrender -->
 
 <!-- ------Engage combat requires validation that each entity has a target -->
 
-------Each time an entity takes damage, it must self check to see if it died, attacking entity must check if dead as well, canceling attack if true.
-------Menu will display current status of herd/fleet: current target & target health (clean up for uniform look)
+<!-- ------Each time an entity takes damage, it must self check to see if it died, attacking entity must check if dead as well, canceling attack if true. -->
+<!-- ------Menu will display current status of herd/fleet: current target & target health (clean up for uniform look) -->
 
 <!-- ----When attacking, a randint(-5, 5) will be added to attack_power -->
 
 <!-- --(/10 points): As a developer, I want a Robot/Dinosaur to lose health points (loss based on attack power) when another Robot/Dinosaur successfully attacks it. -->
 
---(/10 points): As a developer, I want the battle to conclude once either all the robots in the Fleet have their health points reach zero or all of the dinosaurs in the Herd have their health points reach zero.
+<!-- --(/10 points): As a developer, I want the battle to conclude once either all the robots in the Fleet have their health points reach zero or all of the dinosaurs in the Herd have their health points reach zero. -->
 
 Bonus points:
 

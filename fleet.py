@@ -87,6 +87,7 @@ class Fleet:
     return targets
 
   def display_status(self):
+    print('[ FLEET STATUS ]\n')
     for robot in self.robots:
       if robot.is_alive:
         target = f'{robot.target.name} | Target Health: {robot.target.health}' if robot.target else 'None'
@@ -101,6 +102,7 @@ class Fleet:
 
     i = 0
     while i < NUM_COMBATANTS:
+      print(f'[ ASSEMBLE THE FLEET {i + 1}/{NUM_COMBATANTS} ]')
       name = input(name_prompt)
       new_robot = Robot(name)
       new_robot.equip_weapon(weapons)
